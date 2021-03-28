@@ -9,18 +9,27 @@ class Home extends Component {
     movies: null,
   };
 
+  constructor(props) {
+    super(props);
+    this.source = axios.CancelToken.source();
+  }
+
   async getMovies() {
     const url = "https://yts-proxy.now.sh/list_movies.json?sort_by=rating";
     const {
       data: {
         data: { movies },
       },
-    } = await axios.get(url);
+    } = await axios.get(url, { cancelToken: this.source.token });
     this.setState({ isLoading: false, movies });
   }
 
   componentDidMount() {
     this.getMovies();
+  }
+
+  componentWillUnmount() {
+    this.source.cancel("Component got unmounted!");
   }
 
   render() {
