@@ -1,6 +1,7 @@
 import { Component } from "react";
 import Movie from "./Movie";
 import axios from "axios";
+import "./App.css";
 
 class App extends Component {
   state = {
@@ -31,7 +32,11 @@ class App extends Component {
             <span className="loader__text">Loading...</span>
           </div>
         ) : (
-          movies.map((movie) => <Movie key={movie.id} {...movie} />)
+          <div className="movies">
+            {movies.map((movie) => (
+              <Movie key={movie.id} {...movie} />
+            ))}
+          </div>
         )}
       </section>
     );
